@@ -1,0 +1,11 @@
+codegen/
+slprj/
+/data/*
+!/data
+
+*.slxc
+*.asv
+*.csv
+*.bak
+*.autosave
+*.mexw64
