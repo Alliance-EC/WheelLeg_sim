@@ -1,5 +1,5 @@
 % VMC解算优化版本，大幅减少计算量
-if exist('data\leg_calc.mat', 'file') == 0
+if ~exist(fullfile(pwd, 'data', 'leg_calc.mat'), 'file')
 clear;
 tic;
 syms phi1_t(t) phi2_t(t) phi3_t(t) phi4_t(t) phi_dot_1 phi_dot_4;
@@ -77,7 +77,6 @@ pos = formula(pos_t);
 pos = subs(pos, [phi1_t(t) phi4_t(t)], [phi1 phi4]);
 disp('5%');
 % 求得腿部运动速度
-%{
 syms dphi1 dphi4;
 Ts = subs(Ts, [phi2_t(t) phi3_t(t) L0 phi0], [phi2_t_ phi3_t_ L0_ phi0_]);
 Ts = simplify(Ts);
@@ -86,7 +85,6 @@ spd_t = Ts * [dphi1; dphi4];
 spd = formula(spd_t);
 spd = subs(spd, [phi1_t(t) phi4_t(t)], [phi1 phi4]);
 disp('45%');
-%}
 % 求得VMC转换矩阵
 syms F Tp;
 Tf = subs(Tf, [phi2_t(t) phi3_t(t) L0 phi0], [phi2_t_ phi3_t_ L0_ phi0_]);
@@ -118,7 +116,7 @@ T_r = subs(T_r, [l1 l2 l3 l4 l5], [l1_ l2_ l3_ l4_ l5_]);
 % [l0; theta] = leg_pos(phi1, phi4)
 matlabFunction(pos, 'File', 'function/leg_pos');
 % [dl0; dphi0] = leg_spd(dphi1, dphi4, phi1, phi4) 计算有问题，不要用
-%matlabFunction(spd, 'File', 'function/leg_spd');
+matlabFunction(spd, 'File', 'function/leg_spd');
 % [T1; T2] = leg_conv(F, Tp, phi1, phi4)
 matlabFunction(T, 'File', 'function/leg_conv');
 % [F; Tp] = leg_conv_reverse(T1, T2, phi1, phi4)
