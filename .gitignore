@@ -1,7 +1,7 @@
 codegen/
 slprj/
 /data/*
-!/data
+/function/*.m
 
 *.slxc
 *.asv
